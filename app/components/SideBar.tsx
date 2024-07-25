@@ -9,7 +9,7 @@ const SideBar = ({ onNewChat }) => {
                         New Chat
                     </button>
 
-                    {Here i want to render the users chats}
+
                 </li>
             </ul>
         </div>
