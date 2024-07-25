@@ -1,30 +1,33 @@
 // pages/api/users.js
 import axios from 'axios';
-import { NextResponse,NextRequest } from 'next/server';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
-export async function GET(req:NextRequest, res: NextResponse) {
-    
+export  async function GET(req: NextApiRequest, res: NextApiResponse) {
     const apiKey = process.env.CLERK_SECRET_KEY;
-    let allUsers: any[] = [];
+    let allUsers = [];
     let page = 0;
-    const limit = 100; // Adjust the limit as needed, keeping it high to minimize requests
+    const limit = 100;
 
-    try {
-        while (true) {
-            const response = await axios.get(`https://api.clerk.dev/v1/users?limit=${limit}&offset=${page * limit}`, {
-                headers: { Authorization: `Bearer ${apiKey}` }
-            });
-            allUsers = allUsers.concat(response.data);
-            if (response.data.length < limit) {
-                break; // Break the loop if there are no more users to fetch
+    if (req.method === 'GET') {
+        try {
+            while (true) {
+                const response = await axios.get(`https://api.clerk.dev/v1/users?limit=${limit}&offset=${page * limit}`, {
+                    headers: { Authorization: `Bearer ${apiKey}` }
+                });
+                allUsers = allUsers.concat(response.data);
+                if (response.data.length < limit) {
+                    break; // Break the loop if there are no more users to fetch
+                }
+                page++;
             }
-            page++;
-        }
-            console.log('Fetched users:', allUsers);
-            return NextResponse.json(allUsers);  // Using NextResponse to directly return JSON
+            res.status(200).json(allUsers);
         } catch (error) {
             console.error('Failed to fetch users:', error);
-            return new NextResponse(JSON.stringify({ error: 'Failed to fetch users' }))
-        
-    } 
+            res.status(500).json({ error: 'Failed to fetch users', details: error.message });
+        }
+    } else {
+        // If a non-GET method is used, return a 405 Method Not Allowed
+        res.setHeader('Allow', ['GET']);
+        res.status(405).end('Method Not Allowed');
+    }
 }
