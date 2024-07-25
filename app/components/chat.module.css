@@ -1,16 +1,48 @@
 .chatContainer {
   display: flex;
-  flex-direction: column-reverse;
-  height: 100%;
+  flex-direction: column;
+  height: 90vh;
   width: 100%;
+
+  position: relative; /* Needed for absolute positioning of the inputForm */
 }
 
 .inputForm {
+  position: absolute;
+  bottom: 0; /* Keeps the input form at the bottom */
+  left: 0;
+  right: 0;
   display: flex;
   width: 100%;
   padding: 10px;
-  padding-bottom: 40px;
-  order: 1;
+  /* Ensures it's above other content */
+}
+
+.messages {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 80px;
+}
+
+/* Styling the scrollbar to match the dark theme */
+.messages::-webkit-scrollbar {
+  width: 8px; /* Adjust width of the scrollbar */
+}
+
+.messages::-webkit-scrollbar-track {
+  background: #35353b; /* Dark track/background */
+}
+
+.messages::-webkit-scrollbar-thumb {
+  background-color: #4e4e4e; /* Darker color for the thumb */
+  border-radius: 4px;
+}
+
+.messages::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Slightly lighter color on hover */
 }
 
 .input {
@@ -18,28 +50,30 @@
   padding: 16px 24px;
   margin-right: 10px;
   border-radius: 60px;
-  border: 2px solid transparent;
+  border: 2px solid #28282c; /* Border color adjusted to match the dark theme */
   font-size: 1em;
-  background-color: #efefef;
+  background-color: #35353b; /* Input background */
+  color: #fff; /* Text color */
 }
 
 .input:focus {
   outline: none !important;
-  border-color: #000;
-  background-color: white;
+  border-color: #000000;
+  background-color: #28282c; /* Focus background color */
 }
 
 .button {
   padding: 8px 24px;
-  background-color: #000;
+  background-color: #000000;
   color: white;
   border: none;
   font-size: 1em;
-  border-radius: 60px; /* Removed duplicate border-radius property */
+  border-radius: 60px;
 }
 
 .button:disabled {
-  background-color: lightgrey;
+  background-color: #35353b; /* Disabled button color */
+  color: #666; /* Disabled text color */
 }
 
 .messages {
@@ -49,6 +83,7 @@
   display: flex;
   flex-direction: column;
   order: 2;
+  background-color: #28282c; /* Messages background */
   white-space: pre-wrap;
 }
 
@@ -72,19 +107,19 @@
 .userMessage {
   align-self: flex-end;
   color: #fff;
-  background-color: #000;
+  background-color: #000; /* Pure black for user message background */
 }
 
 .assistantMessage {
-  background-color: #efefef;
+  color: #fff; /* White text for readability */
+  background-color: #35353b; /* Dark gray for assistant message background */
 }
 
 .codeMessage {
   padding: 10px 16px;
-  background-color: #181616;
+  background-color: #181616; /* Even darker background for code messages */
   font-family: monospace;
-  counter-reset: line;
-  color: #05e405;
+  color: #05e405; /* Bright color for code text */
 }
 
 .codeMessage > div {
@@ -92,6 +127,6 @@
 }
 
 .codeMessage span {
-  color: #54dd04;
+  color: #54dd04; /* Bright green for span elements within code */
   margin-right: 8px;
 }

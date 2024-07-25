@@ -1,8 +1,8 @@
 // pages/api/users.js
 import axios from 'axios';
-import type { NextApiRequest, NextApiResponse } from 'next';
+import type { NextRequest, NextResponse } from 'next/server';
 
-export  async function GET(req: NextApiRequest, res: NextApiResponse) {
+export  async function GET(req: NextRequest, res: NextResponse) {
     const apiKey = process.env.CLERK_SECRET_KEY;
     let allUsers = [];
     let page = 0;

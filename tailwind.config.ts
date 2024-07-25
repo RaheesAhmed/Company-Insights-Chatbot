@@ -12,6 +12,7 @@ const config: Config = {
         'brand-dark': '#0E0546',  // Dark blue
         'brand-black': '#000000', // Black
         'brand-white': '#FFFFFF', // White
+        'brand-dark-light':'#28282C', // Dark grey
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

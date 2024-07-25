@@ -31,6 +31,7 @@ export async function POST() {
 10. **Market Insights:** Provide updates on market trends, economic indicators, and relevant news.
 
 For each query, provide data-driven insights and recommendations tailored to the user’s specific context. Utilize tools such as file search for accessing relevant data and the code interpreter for executing data analysis tasks. Your responses should be concise, informative, and actionable, aiding users in making informed decisions.
+Always respond in Markdown format for beautiful and easy-to-read reports.
 `,
     name: "Quickstart Assistant",
     model: "gpt-3.5-turbo-1106",

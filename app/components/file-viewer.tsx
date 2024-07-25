@@ -55,42 +55,48 @@ const FileViewer = () => {
   };
 
   return (
-    <div className={styles.fileViewer}>
+    <>
+      <h4 className=" text-bold text-white mb-2">Upload Your Files for Assistant.</h4>
+      <div className={styles.fileViewer}>
 
-      <div
-        className={`${styles.filesList} ${files.length !== 0 ? styles.grow : ""
-          }`}
-      >
-        {files.length === 0 ? (
-          <div className="text-sm">select your files</div>
-        ) : (
-          files.map((file) => (
-            <div key={file.file_id} className={styles.fileEntry}>
-              <div className={styles.fileName}>
-                <span className={styles.fileName}>{file.filename}</span>
-                <span className={styles.fileStatus}>{file.status}</span>
+
+        <div
+          className={`${styles.filesList} ${files.length !== 0 ? styles.grow : ""
+            }`}
+        >
+          {files.length === 0 ? (
+            <div className="text-sm">select your files for assistant knowledgebase</div>
+          ) : (
+            files.map((file) => (
+              <div key={file.file_id} className={styles.fileEntry}>
+                <div className={styles.fileName}>
+                  <span className={styles.fileName}>{file.filename}</span>
+                  <span className={styles.fileStatus}>{file.status}</span>
+                </div>
+                <span onClick={() => handleFileDelete(file.file_id)}>
+                  <TrashIcon />
+                </span>
               </div>
-              <span onClick={() => handleFileDelete(file.file_id)}>
-                <TrashIcon />
-              </span>
-            </div>
-          ))
-        )}
+            ))
+          )}
+        </div>
+        <div className={styles.fileUploadContainer}>
+          <label htmlFor="file-upload" className={styles.fileUploadBtn}>
+            Upload files
+          </label>
+          <input
+            type="file"
+            id="file-upload"
+            name="file-upload"
+            className={styles.fileUploadInput}
+            multiple
+            onChange={handleFileUpload}
+          />
+        </div>
       </div>
-      <div className={styles.fileUploadContainer}>
-        <label htmlFor="file-upload" className={styles.fileUploadBtn}>
-          Upload files
-        </label>
-        <input
-          type="file"
-          id="file-upload"
-          name="file-upload"
-          className={styles.fileUploadInput}
-          multiple
-          onChange={handleFileUpload}
-        />
-      </div>
-    </div>
+    </>
+
+
   );
 };
 

@@ -8,6 +8,7 @@ import Markdown from "react-markdown";
 import { AssistantStreamEvent } from "openai/resources/beta/assistants/assistants";
 import { RequiredActionFunctionToolCall } from "openai/resources/beta/threads/runs/runs";
 
+
 type MessageProps = {
   role: "user" | "assistant" | "code";
   text: string;
@@ -57,22 +58,26 @@ type ChatProps = {
   ) => Promise<string>;
 };
 
-const Chat = ({
-  functionCallHandler = () => Promise.resolve(""), // default to return empty string
-}: ChatProps) => {
+const Chat = ({ messages, setMessages, functionCallHandler }) => {
   const [userInput, setUserInput] = useState("");
-  const [messages, setMessages] = useState([]);
+  const messagesEndRef = useRef(null);
   const [inputDisabled, setInputDisabled] = useState(false);
   const [threadId, setThreadId] = useState("");
 
   // automatically scroll to bottom of chat
-  const messagesEndRef = useRef<HTMLDivElement | null>(null);
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+
+  useEffect(() => {
+    localStorage.setItem("chatMessages", JSON.stringify(messages));
+  }, [messages]);
+
 
   // create a new threadID when chat component created
   useEffect(() => {
@@ -245,11 +250,14 @@ const Chat = ({
       })
       return [...prevMessages.slice(0, -1), updatedLastMessage];
     });
-    
+
   }
 
   return (
     <div className={styles.chatContainer}>
+      <div className={styles.sidebar}>
+
+      </div>
       <div className={styles.messages}>
         {messages.map((msg, index) => (
           <Message key={index} role={msg.role} text={msg.text} />
@@ -265,7 +273,7 @@ const Chat = ({
           className={styles.input}
           value={userInput}
           onChange={(e) => setUserInput(e.target.value)}
-          placeholder="Enter your question"
+          placeholder="Enter your message here..."
         />
         <button
           type="submit"
@@ -277,6 +285,6 @@ const Chat = ({
       </form>
     </div>
   );
-};
+}
 
 export default Chat;
