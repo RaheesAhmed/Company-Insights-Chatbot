@@ -17,7 +17,7 @@ const FunctionCalling = () => {
     const savedMessages = localStorage.getItem("chatMessages");
     return savedMessages ? JSON.parse(savedMessages) : [];
   });
-  const functionCallHandler = async (call) => {
+  const functionCallHandler = async (call: any) => {
     switch (call.function.name) {
       case "get_weather":
         const weatherArgs = JSON.parse(call.function.arguments);
