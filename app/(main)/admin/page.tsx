@@ -1,4 +1,4 @@
-// Admin.jsx
+
 "use client";
 import React, { useEffect, useState } from 'react';
 import FileViewer from "../../components/file-viewer";
@@ -7,14 +7,14 @@ import MetricsCard from "../../components/MetricsCard";
 
 const Admin = () => {
     const { user } = useUser();
-    const [users, setUsers] = useState([]);
+    const [userCount, setUserCount] = useState(0);
 
     useEffect(() => {
         const fetchUsers = async () => {
             try {
                 const res = await fetch('/api/users');
-                const data = await res.json();
-                setUsers(data);
+                const users = await res.json();
+                setUserCount(users.length);
             } catch (error) {
                 console.error('Error fetching users:', error);
             }
@@ -38,7 +38,7 @@ const Admin = () => {
                     <p className="text-2xl font-semibold">Welcome, {user?.fullName}</p>
                     <FileViewer />
                     <div className="grid grid-cols-3 gap-4 mt-8">
-                        <MetricsCard title="Active Users" value={users.length.toString()} description="Number of active users this month" />
+                        <MetricsCard title="Total Users" value={userCount.toString()} description="Total number of users registered" />
                     </div>
                     <ul>
                         {users.map((u, index) => (
