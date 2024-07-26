@@ -2,7 +2,7 @@ import { assistantId } from "@/app/assistant-config";
 import { openai } from "@/app/openai";
 
 // upload file to assistant's vector store
-export async function POST(request) {
+export async function POST(request: any) {
   const formData = await request.formData(); // process file as FormData
   const file = formData.get("file"); // retrieve the single file from FormData
   const vectorStoreId = await getOrCreateVectorStore(); // get or create vector store
@@ -43,7 +43,7 @@ export async function GET() {
 }
 
 // delete file from assistant's vector store
-export async function DELETE(request) {
+export async function DELETE(request: any) {
   const body = await request.json();
   const fileId = body.fileId;
 
