@@ -5,7 +5,7 @@ import './globals.css';
 import AuthenticatedComponent from '@/app/components/AuthenticatedComponent';
 import NavBar from '@/app/components/NavBar';
 
-export default function RootLayout({ children }) {
+export default function RootLayout({ children }: any) {
   return (
     <html lang="en"> {/* Ensure you have the <html> tag with the appropriate attributes */}
       <body> {/* Ensure you have the <body> tag */}

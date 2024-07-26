@@ -1,10 +1,9 @@
 {
   "compilerOptions": {
     "lib": ["dom", "dom.iterable", "esnext"],
-    "strict": false, // Changed from true to false to disable all strict type-checking options
-    "noImplicitAny": false, // Allow 'any' types
-    "noUnusedLocals": false, // Do not error on unused local variables
-    "noUnusedParameters": false,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",

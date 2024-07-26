@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SideBar = ({ onNewChat }) => {
+const SideBar = ({ onNewChat }: { onNewChat: any }) => {
     return (
         <>
             <div className="w-64 min-h-screen bg-brand-black text-white flex flex-col">
