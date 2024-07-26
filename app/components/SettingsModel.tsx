@@ -10,7 +10,7 @@ export const SettingsModel = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('http://localhost:3000/api/assistants');
+                const response = await fetch('/api/assistants');
                 const data = await response.json();
                 setAssistant(data);
                 // Set initial values for editable fields
@@ -42,51 +42,51 @@ export const SettingsModel = () => {
     };
 
     if (!assistant) {
-        return <div className="text-center">Loading...</div>;
+        return <div className="text-center text-white">Loading...</div>;
     }
 
     return (
-        <div className="p-8 bg-gray-100 min-h-screen">
-            <div className="max-w-4xl mx-auto bg-white p-5 rounded-lg shadow">
+        <div className="p-8 bg-gradient-to-r from-stone-900 to-gray-800  text-white min-h-screen">
+            <div className="max-w-4xl mx-auto bg-gradient-to-r from-stone-900 to-gray-800  text-white p-5 rounded-lg shadow">
                 {editMode ? (
                     <>
                         <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
+                            <label className="block text-white text-sm font-bold mb-2" htmlFor="name">
                                 Name
                             </label>
                             <input
                                 type="text"
                                 id="name"
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-green-500 bg-black leading-tight focus:outline-none focus:shadow-outline"
                                 value={editedName}
                                 onChange={(e) => setEditedName(e.target.value)}
                             />
                         </div>
                         <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="model">
+                            <label className="block text-white text-sm font-bold mb-2" htmlFor="model">
                                 Model
                             </label>
                             <input
                                 type="text"
                                 id="model"
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-green-500 bg-black leading-tight focus:outline-none focus:shadow-outline"
                                 value={editedModel}
                                 onChange={(e) => setEditedModel(e.target.value)}
                             />
                         </div>
                         <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="instructions">
+                            <label className="block text-white text-sm font-bold mb-2" htmlFor="instructions">
                                 Instructions
                             </label>
                             <textarea
                                 id="instructions"
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-green-500 bg-black leading-tight focus:outline-none focus:shadow-outline "
                                 value={editedInstructions}
                                 onChange={(e) => setEditedInstructions(e.target.value)}
                                 rows="4"
                             />
                         </div>
-                        <button onClick={handleSave} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                        <button onClick={handleSave} className="bg-black hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                             Save
                         </button>
                     </>
@@ -96,7 +96,7 @@ export const SettingsModel = () => {
                         <p className="text-gray-700"><strong>Model:</strong> {assistant.model}</p>
                         <div>
                             <h2 className="text-lg font-semibold mt-4 mb-2">Instructions:</h2>
-                            <div className="bg-gray-200 p-3 rounded">
+                            <div className="bg-black  text-green-500 p-3 rounded">
                                 {assistant.instructions ? <pre className="whitespace-pre-wrap">{assistant.instructions}</pre> : <p>No instructions provided.</p>}
                             </div>
                         </div>
@@ -108,7 +108,7 @@ export const SettingsModel = () => {
                                 ))}
                             </ul>
                         </div>
-                        <button onClick={handleEditToggle} className="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                        <button onClick={handleEditToggle} className="mt-4 bg-black w-60 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                             Edit
                         </button>
                     </>

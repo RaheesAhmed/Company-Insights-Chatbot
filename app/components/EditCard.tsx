@@ -3,7 +3,7 @@ import { PencilIcon } from '@heroicons/react/solid';  // Make sure to install `@
 
 const EditCard = ({ onClick }) => {
     return (
-        <div className="bg-gray-800 text-white p-4 rounded-lg shadow-lg cursor-pointer hover:bg-gray-700 transition duration-150 ease-in-out">
+        <div className="bg-black text-white p-4 rounded-lg shadow-lg cursor-pointer hover:bg-gray-700 transition duration-150 ease-in-out">
             <div className="flex items-center justify-between">
                 <div>
                     <h2 className="text-lg font-semibold">Edit Settings</h2>

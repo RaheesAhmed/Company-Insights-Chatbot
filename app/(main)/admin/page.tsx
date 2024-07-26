@@ -16,7 +16,7 @@ const Admin = () => {
         <div className="flex min-h-screen bg-brand-dark-light">
             <div className="w-64 min-h-screen bg-brand-black text-white flex flex-col"> {/* Sidebar */}
                 <ul className="flex-grow mt-4 space-y-2">
-                    <li><a href="#" className="block p-4 hover:bg-blue-700">Dashboard</a></li>
+                    <li><a href="#" className="block p-4 text-white shadow-lg hover:bg-gray-700 rounded-md">Dashboard</a></li>
                 </ul>
                 {/* <div className="mt-auto">
                     <button onClick={toggleSettings} className="block p-4 hover:bg-blue-700">Settings</button>

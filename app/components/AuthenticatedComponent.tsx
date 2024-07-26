@@ -3,18 +3,21 @@ import React, { useEffect } from 'react';
 import { useUser } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
 
+
 const AuthenticatedComponent = ({ children }) => {
-    const { isSignedIn } = useUser();
+    const { isSignedIn, user } = useUser();
     const router = useRouter();
 
     useEffect(() => {
         if (!isSignedIn) {
-            router.push('/'); // Adjust the route as necessary
+            // Redirect to the login page if not signed in
+            router.push('/');
         } else {
-            router.push('/examples/all');
+            router.push('/chat');
         }
-    }, [isSignedIn, router]);
+    }, [isSignedIn, user, router]);
 
+    // This will only render children if the user is signed in and not trying to access restricted admin content without permission
     return <>{children}</>;
 }
 

@@ -130,3 +130,7 @@
   color: #54dd04; /* Bright green for span elements within code */
   margin-right: 8px;
 }
+
+.hero {
+  background-image: url("../../public/background.jpg");
+}

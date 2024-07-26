@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "./file-viewer.module.css";
-
+import { DocumentAddIcon } from '@heroicons/react/outline';
 const TrashIcon = () => (
   <svg
     className={styles.fileDeleteIcon}
@@ -8,7 +8,7 @@ const TrashIcon = () => (
     viewBox="0 0 12 12"
     height="12"
     width="12"
-    fill="#353740"
+    fill="#fff"
   >
     <path
       fillRule="evenodd"
@@ -56,47 +56,44 @@ const FileViewer = () => {
 
   return (
     <>
-      <h4 className=" text-bold text-white mb-2">Upload Your Files for Assistant.</h4>
-      <div className={styles.fileViewer}>
+      <h4 className="text-bold text-white mt-5 font-semibold">
+        Upload Your Files for Assistant
+      </h4>
+      <p className="text-sm text-white mb-5">
+        These files will be used for Assistant. It will be used for Assistant Knowledgebase.
+      </p>
+      <div className='bg-black text-white p-4 rounded-lg shadow-lg'>
 
-
-        <div
-          className={`${styles.filesList} ${files.length !== 0 ? styles.grow : ""
-            }`}
-        >
+        <div className={`${files.length !== 0 ? 'grow' : ''} overflow-auto`}>
           {files.length === 0 ? (
-            <div className="text-sm">select your files for assistant knowledgebase</div>
+            <div className="text-sm text-gray-400  font-semibold text-center"></div>
           ) : (
             files.map((file) => (
-              <div key={file.file_id} className={styles.fileEntry}>
-                <div className={styles.fileName}>
-                  <span className={styles.fileName}>{file.filename}</span>
-                  <span className={styles.fileStatus}>{file.status}</span>
-                </div>
-                <span onClick={() => handleFileDelete(file.file_id)}>
-                  <TrashIcon />
-                </span>
+              <div key={file.file_id} className="flex justify-between items-center p-2 hover:bg-gray-700 rounded-md">
+                <span className="text-white truncate">{file.filename}</span>
+                <button onClick={() => handleFileDelete(file.file_id)} className="text-red-500 hover:text-red-700">
+                  <TrashIcon className="h-5 w-5" />
+                </button>
               </div>
             ))
           )}
         </div>
-        <div className={styles.fileUploadContainer}>
-          <label htmlFor="file-upload" className={styles.fileUploadBtn}>
-            Upload files
+        <div className='mt-4 flex justify-center items-center p-4 rounded-lg shadow-lg hover:bg-gray-700 transition duration-150 ease-in-out cursor-pointer'>
+          <label htmlFor="file-upload" className="flex items-center justify-center space-x-2 cursor-pointer">
+            <DocumentAddIcon className="h-6 w-6 text-white" />
+            <span className="text-white">Upload files</span>
           </label>
           <input
             type="file"
             id="file-upload"
             name="file-upload"
-            className={styles.fileUploadInput}
+            className="hidden"
             multiple
             onChange={handleFileUpload}
           />
         </div>
       </div>
     </>
-
-
   );
 };
 
