@@ -12,11 +12,24 @@ import SideBar from "@/app/components/SideBar";
 const FunctionCalling = () => {
   const [weatherData, setWeatherData] = useState({});
   const [cryptoPrices, setcryptoPrices] = useState("");
+  const [selectedChat, setSelectedChat] = useState(null);
   const [messages, setMessages] = useState(() => {
     // Initialize chat from localStorage
     const savedMessages = localStorage.getItem("chatMessages");
     return savedMessages ? JSON.parse(savedMessages) : [];
   });
+  const [sessions, setSessions] = useState(() => {
+    const savedSessions = localStorage.getItem("chatSessions");
+    return savedSessions ? JSON.parse(savedSessions) : [];
+  });
+  const [activeSessionIndex, setActiveSessionIndex] = useState(null);
+
+  useEffect(() => {
+    localStorage.setItem("chatSessions", JSON.stringify(sessions));
+  }, [sessions]);
+
+
+
   const functionCallHandler = async (call: any) => {
     switch (call.function.name) {
       case "get_weather":
@@ -38,16 +51,55 @@ const FunctionCalling = () => {
     localStorage.setItem("chatMessages", JSON.stringify(messages));
   }, [messages]);
 
+  useEffect(() => {
+    localStorage.setItem("chatSessions", JSON.stringify(sessions));
+  }, [sessions]);
 
+  // This function is triggered when starting a new chat
   const handleNewChat = () => {
-    setMessages([]);
-    localStorage.removeItem("chatMessages");
+    const newSession = {
+      messages: [], // Initialize with no messages
+      id: `session-${Date.now()}` // Unique identifier for the session
+    };
+    setSessions(prevSessions => [...prevSessions, newSession]); // Add new session to the list
+    setActiveSessionIndex(sessions.length); // Set the new session as active
   };
+
+  // This function is triggered when selecting a chat from the sidebar
+  const handleSelectChat = (index) => {
+    setActiveSessionIndex(index); // Update the active session index
+    setMessages(sessions[index].messages); // Load the messages from the selected session
+  };
+
+  useEffect(() => {
+    // This effect updates the local storage when sessions change
+    localStorage.setItem("chatSessions", JSON.stringify(sessions));
+  }, [sessions]);
+
+
+
+  useEffect(() => {
+    // Update the active session's messages when `messages` changes
+    if (activeSessionIndex !== null) {
+      const updatedSessions = [...sessions];
+      updatedSessions[activeSessionIndex].messages = messages;
+      setSessions(updatedSessions);
+    }
+  }, [messages]);
+  const handleClearAllChats = () => {
+    setSessions([]); // Clear all sessions
+    localStorage.removeItem("chatSessions"); // Remove sessions from local storage
+    setSelectedChat(null); // Clear selected chat
+    setMessages([]); // Clear messages
+  };
+
 
   return (
     <main className={styles.main}>
       <div className={styles.container}>
-        <SideBar onNewChat={handleNewChat} />
+        <SideBar onNewChat={handleNewChat} onSelectChat={handleSelectChat} />
+
+
         <div className={styles.chatContainer}>
           <div className={styles.chat}>
             <Chat functionCallHandler={functionCallHandler} messages={messages} setMessages={setMessages} />

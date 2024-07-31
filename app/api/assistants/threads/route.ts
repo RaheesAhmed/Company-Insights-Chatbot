@@ -5,6 +5,6 @@ export const runtime = "nodejs";
 // Create a new thread
 export async function POST() {
   const thread = await openai.beta.threads.create();
-  console.log(thread)
+  
   return Response.json({ threadId: thread.id });
 }

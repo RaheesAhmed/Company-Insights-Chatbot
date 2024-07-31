@@ -15,7 +15,5 @@ export async function POST(request, { params: { threadId } }) {
   const stream = openai.beta.threads.runs.stream(threadId, {
     assistant_id: assistantId,
   });
-
-  console.log(stream)
   return new Response(stream.toReadableStream());
 }

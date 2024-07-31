@@ -1,0 +1,6 @@
+.sidebarContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* This will push the button to the bottom */
+  height: 100%; /* Use the full height */
+}

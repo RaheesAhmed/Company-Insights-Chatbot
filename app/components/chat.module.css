@@ -15,7 +15,9 @@
   display: flex;
   width: 100%;
   padding: 10px;
-  /* Ensures it's above other content */
+  background-color: #35353b;
+  border-radius: 60px; /* Input form background */
+  padding: 16px 24px;
 }
 
 .messages {
@@ -47,10 +49,9 @@
 
 .input {
   flex-grow: 1;
-  padding: 16px 24px;
+  padding-left: 24px;
   margin-right: 10px;
   border-radius: 60px;
-  border: 2px solid #28282c; /* Border color adjusted to match the dark theme */
   font-size: 1em;
   background-color: #35353b; /* Input background */
   color: #fff; /* Text color */
@@ -58,8 +59,8 @@
 
 .input:focus {
   outline: none !important;
-  border-color: #000000;
-  background-color: #28282c; /* Focus background color */
+
+  background-color: #35353b; /* Focus background color */
 }
 
 .button {
@@ -91,7 +92,7 @@
 .assistantMessage,
 .codeMessage {
   margin: 8px 0;
-  padding: 8px 16px;
+  padding: 8px 14px;
   align-self: flex-start;
   border-radius: 15px;
   max-width: 80%;
@@ -105,7 +106,7 @@
 }
 
 .userMessage {
-  align-self: flex-end;
+  align-self: flex-start;
   color: #fff;
   background-color: #000; /* Pure black for user message background */
 }
@@ -133,4 +134,19 @@
 
 .hero {
   background-image: url("../../public/background.jpg");
+}
+
+.uploadButton {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  color: black;
+  font-size: 1.5rem;
+  padding: 5px;
+}
+
+.fileInput {
+  display: none;
 }

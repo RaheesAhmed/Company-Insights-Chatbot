@@ -92,8 +92,8 @@ export const SettingsModel = () => {
                     </>
                 ) : (
                     <>
-                        <h1 className="text-xl font-bold">{assistant.name}</h1>
-                        <p className="text-gray-700"><strong>Model:</strong> {assistant.model}</p>
+                        <h1 className="text-xl text-wite font-semibold">{assistant.name}</h1>
+                        <p className="text-wite font-semibold"><strong>Model:</strong> {assistant.model}</p>
                         <div>
                             <h2 className="text-lg font-semibold mt-4 mb-2">Instructions:</h2>
                             <div className="bg-black  text-green-500 p-3 rounded">
@@ -104,7 +104,7 @@ export const SettingsModel = () => {
                             <h2 className="text-lg font-semibold mt-4">Tools:</h2>
                             <ul className="list-disc pl-5">
                                 {assistant.tools.map((tool, index) => (
-                                    <li key={index} className="text-gray-700">{tool.type}</li>
+                                    <li key={index} className="text-wite font-semibold">{tool.type}</li>
                                 ))}
                             </ul>
                         </div>

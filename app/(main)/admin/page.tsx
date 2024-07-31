@@ -5,6 +5,7 @@ import { useUser } from '@clerk/clerk-react';
 import MetricsCard from "../../components/MetricsCard";
 import { SettingsModel } from "../../components/SettingsModel";
 import EditCard from "../../components/EditCard";
+import GetAllFiles from '@/app/components/GetAllFiles';
 
 const Admin = () => {
     const { user } = useUser();
@@ -17,10 +18,9 @@ const Admin = () => {
             <div className="w-64 min-h-screen bg-brand-black text-white flex flex-col"> {/* Sidebar */}
                 <ul className="flex-grow mt-4 space-y-2">
                     <li><a href="#" className="block p-4 text-white shadow-lg hover:bg-gray-700 rounded-md">Dashboard</a></li>
+                    <li><a href="#" className="block p-4 text-white shadow-lg hover:bg-gray-700 rounded-md">Data Managment</a></li>
                 </ul>
-                {/* <div className="mt-auto">
-                    <button onClick={toggleSettings} className="block p-4 hover:bg-blue-700">Settings</button>
-                </div> */}
+
             </div>
 
             <div className="flex-1 p-10"> {/* Main content area */}
@@ -30,10 +30,10 @@ const Admin = () => {
                     {showSettings ? <SettingsModel /> : <FileViewer />}
                 </div>
             </div>
+
         </div>
     );
 };
 
 
 export default Admin;
-
