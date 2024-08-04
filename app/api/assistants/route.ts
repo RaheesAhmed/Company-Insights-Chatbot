@@ -15,6 +15,28 @@ export async function POST(request: Request) {
       { type: "code_interpreter" },
       
       { type: "file_search" },
+      {
+        type: "function",
+        function: {
+          name: "downloadPDF",
+          description: "Download the generated Report",
+          parameters: {
+            type: "object",
+            properties: {
+              url: {
+                type: "string",
+                description: "Thge URL for the PDF to download",
+              },
+              outputPath: {
+                type: "string",
+                description: "The path to save the downloaded PDF",
+                
+              },
+            },
+            required: ["url", "outputPath"],
+          },
+        },
+      }
     ],
   });
   return Response.json({ assistantId: `Assistant Updated with ID: ${assistant.id}` });

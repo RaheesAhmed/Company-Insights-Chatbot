@@ -4,7 +4,7 @@ import { useUser } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
 
 
-const AuthenticatedComponent = ({ children }) => {
+const AuthenticatedComponent = ({ children }: { children: any }) => {
     const { isSignedIn, user } = useUser();
     const router = useRouter();
 

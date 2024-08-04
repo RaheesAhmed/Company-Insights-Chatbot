@@ -37,14 +37,14 @@ const FileViewer = () => {
     setFiles(data);
   };
 
-  const handleFileDelete = async (fileId) => {
+  const handleFileDelete = async (fileId: any) => {
     await fetch("/api/assistants/files", {
       method: "DELETE",
       body: JSON.stringify({ fileId }),
     });
   };
 
-  const handleFileUpload = async (event) => {
+  const handleFileUpload = async (event: any) => {
     const data = new FormData();
     if (event.target.files.length < 0) return;
     data.append("file", event.target.files[0]);
@@ -62,11 +62,12 @@ const FileViewer = () => {
       <p className="text-sm text-white mb-5">
         These files will be used for Assistant. It will be used for Assistant Knowledgebase.
       </p>
-      <div className='bg-black text-white p-4 rounded-lg shadow-lg'>
+      <hr />
+      <div className='bg-black text-white  text-start p-4 rounded-lg shadow-lg'>
 
         <div className={`${files.length !== 0 ? 'grow' : ''} overflow-auto`}>
           {files.length === 0 ? (
-            <div className="text-sm text-gray-400  font-semibold text-center"></div>
+            <div className="text-sm text-gray-400  font-semibold text-left"></div>
           ) : (
             files.map((file) => (
               <div key={file.file_id} className="flex justify-between items-center p-2 hover:bg-gray-700 rounded-md">
@@ -79,8 +80,8 @@ const FileViewer = () => {
           )}
         </div>
         <div className='mt-4 flex justify-center items-center p-4 rounded-lg shadow-lg hover:bg-gray-700 transition duration-150 ease-in-out cursor-pointer'>
-          <label htmlFor="file-upload" className="flex items-center justify-center space-x-2 cursor-pointer">
-            <DocumentAddIcon className="h-6 w-6 text-white" />
+          <label htmlFor="file-upload" className="flex items-center border-2 p-4 justify-center space-x-2 cursor-pointer">
+            <DocumentAddIcon className="h-6 w-6 text-white " />
             <span className="text-white">Upload files</span>
           </label>
           <input

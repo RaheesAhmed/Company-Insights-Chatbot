@@ -3,14 +3,16 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #28282c; /* Dark background for the main area */
+  background-color: #28282c;
+  overflow-y: hidden;
 }
 
 .container {
   display: flex;
   width: 100%;
   height: 100vh;
-  background-color: #35353b; /* Slightly different shade for the container */
+  background-color: #35353b;
+  overflow-y: hidden; /* Slightly different shade for the container */
 }
 
 .column {
@@ -42,9 +44,10 @@
 }
 
 .chat {
-  max-width: 800px;
+  max-width: 1200px;
   margin-top: 20px;
-  width: 100%;
+  width: 800px;
   height: 100%;
+
   /* Ensuring text is visible */
 }

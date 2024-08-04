@@ -9,7 +9,7 @@ export default function RootLayout({ children }: any) {
   return (
     <html lang="en"> {/* Ensure you have the <html> tag with the appropriate attributes */}
       <body> {/* Ensure you have the <body> tag */}
-        <ClerkProvider>
+        <ClerkProvider className="bg-black">
           <div> {/* Wrapper div for your content */}
             <header>
               <NavBar />
