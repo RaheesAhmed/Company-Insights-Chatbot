@@ -1,6 +1,20 @@
-# Company Insights Chatbot Setup Guide
+# Company Insights Chatbot
 
-Follow these steps to set up and run the Company Insights Chatbot on your local machine.
+The Company Insights Chatbot is an advanced analytical tool designed to provide comprehensive insights into various aspects of company data. Leveraging the OpenAI Assistant API with a code interpreter, this chatbot delivers in-depth analyses and actionable recommendations tailored to user-specific needs.
+
+## Key Features
+
+- **Portfolio Analysis:** Generates detailed reports on portfolio performance, asset allocation, and sectoral/geographical contributions.
+- **Asset Class Evaluation:** Assesses performance across various asset classes including equities and fixed income, with currency-based insights.
+- **Risk Management:** Offers analyses on risk metrics such as VaR and ES, and includes stress testing and sensitivity analyses.
+- **Investment Advisory:** Provides expert buy/sell/hold recommendations and strategies for portfolio rebalancing.
+- **Transaction Oversight:** Tracks and lists all transaction details for meticulous financial management.
+- **Holdings Management:** Reports on the specifics of holdings within a portfolio to inform investment decisions.
+- **Tax Strategy:** Suggests methods to optimize tax liabilities and benefits.
+- **Compliance Monitoring:** Ensures adherence to regulatory standards and identifies necessary corrective actions.
+- **Client Reporting:** Creates tailored reports for clients, highlighting investment strategies and portfolio performance.
+- **Market Insights:** Keeps users informed on market trends and economic indicators.
+
 
 
 ![UI Admin](public/1.PNG) ![UI User](public/2.PNG)
