@@ -8,7 +8,7 @@ import { AssistantStream } from "openai/lib/AssistantStream";
 import Markdown from "react-markdown";
 import CircularProgress from '@mui/material/CircularProgress';
 import { FaUser, FaRobot } from 'react-icons/fa';
-
+import AssistantFunctionsCard from './AssistantFunctionsCard';
 type MessageProps = {
   role: "user" | "assistant" | "code";
   text: string;
@@ -46,7 +46,7 @@ const Chat = ({ messages, setMessages }) => {
   const [inputDisabled, setInputDisabled] = useState(false);
   const [threadId, setThreadId] = useState("");
   const [isUploading, setIsUploading] = useState(false);
-
+  const [showAssistantCards, setShowAssistantCards] = useState(true);
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
@@ -91,6 +91,7 @@ const Chat = ({ messages, setMessages }) => {
     setMessages(prev => [...prev, { role: 'user', text: `${userInput} ${fileInfo}` }]);
     setUserInput('');
     setFileInfo('');
+    setShowAssistantCards(false);
   };
 
   const sendMessage = async (text) => {
@@ -127,6 +128,8 @@ const Chat = ({ messages, setMessages }) => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+
+
   return (
     <div className={styles.chatContainer}>
       <div className={styles.sidebar}></div>
@@ -134,6 +137,7 @@ const Chat = ({ messages, setMessages }) => {
         {messages.map((msg, index) => <Message key={index} role={msg.role} text={msg.text} />)}
         <div ref={messagesEndRef} />
       </div>
+      {showAssistantCards && <AssistantFunctionsCard />}
       <form onSubmit={handleSubmit} className={styles.inputForm}>
         <label htmlFor="file-upload" className={styles.uploadButton}>
 
