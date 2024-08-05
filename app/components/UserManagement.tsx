@@ -93,44 +93,47 @@ const UserManagement = () => {
     } = tableInstance;
 
     return (
-        <div className="container mx-auto p-10 ">
+        <div className="container mx-auto p-6 sm:p-10">
 
             <p className="mb-4 text-white">Total Users: {users.length}</p>
-            <table {...getTableProps()} className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-black text-white">
-                    {headerGroups.map(headerGroup => (
-                        <tr {...headerGroup.getHeaderGroupProps()}>
-                            {headerGroup.headers.map(column => (
-                                <th
-                                    {...column.getHeaderProps()}
-                                    className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
-                                >
-                                    {column.render('Header')}
-                                </th>
-                            ))}
-                        </tr>
-                    ))}
-                </thead>
-                <tbody {...getTableBodyProps()} className="bg-black text-white divide-y divide-gray-200">
-                    {rows.map(row => {
-                        prepareRow(row);
-                        return (
-                            <tr {...row.getRowProps()}>
-                                {row.cells.map(cell => (
-                                    <td
-                                        {...cell.getCellProps()}
-                                        className="px-6 py-4 whitespace-nowrap"
+            <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
+                <table {...getTableProps()} className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                    <thead className="text-xs text-white uppercase bg-gray-800 dark:bg-gray-700">
+                        {headerGroups.map(headerGroup => (
+                            <tr {...headerGroup.getHeaderGroupProps()}>
+                                {headerGroup.headers.map(column => (
+                                    <th
+                                        {...column.getHeaderProps()}
+                                        className="py-3 px-6"
                                     >
-                                        {cell.render('Cell')}
-                                    </td>
+                                        {column.render('Header')}
+                                    </th>
                                 ))}
                             </tr>
-                        );
-                    })}
-                </tbody>
-            </table>
+                        ))}
+                    </thead>
+                    <tbody {...getTableBodyProps()} className="bg-black  dark:bg-gray-800">
+                        {rows.map(row => {
+                            prepareRow(row);
+                            return (
+                                <tr {...row.getRowProps()} className="border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                    {row.cells.map(cell => (
+                                        <td
+                                            {...cell.getCellProps()}
+                                            className="py-4 px-6"
+                                        >
+                                            {cell.render('Cell')}
+                                        </td>
+                                    ))}
+                                </tr>
+                            );
+                        })}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
+
 };
 
 export default UserManagement;
