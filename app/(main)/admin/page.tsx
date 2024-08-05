@@ -18,7 +18,6 @@ const Admin = () => {
         'Dashboard Overview',
         'Data Management',
         'User Management',
-        'Reports',
         'Settings'
     ];
 

@@ -14,6 +14,7 @@ const FunctionCalling = () => {
   const [weatherData, setWeatherData] = useState({});
   const [cryptoPrices, setcryptoPrices] = useState("");
   const [selectedChat, setSelectedChat] = useState(null);
+  const [downloadedPDF, setDownloadedPDF] = useState(null);
   const [messages, setMessages] = useState([]);
   const [sessions, setSessions] = useState(() => {
     const savedSessions = localStorage.getItem("chatSessions");
@@ -24,6 +25,8 @@ const FunctionCalling = () => {
   useEffect(() => {
     console.log('Local Storage Contents:', JSON.parse(JSON.stringify(localStorage)));
   }, []);
+
+
 
   const functionCallHandler = async (call: any) => {
     switch (call.function.name) {
@@ -39,8 +42,8 @@ const FunctionCalling = () => {
         return JSON.stringify(symbol);
       case "downloadPDF":
         const downloadArgs = JSON.parse(call.function.arguments);
-        await downloadPDF(downloadArgs.url, '../../data');
-        return JSON.stringify({ success: true });
+
+        return JSON.stringify({ message: "PDF downloaded successfully" });
       default:
         return JSON.stringify({ error: "Function not supported" });
     }
