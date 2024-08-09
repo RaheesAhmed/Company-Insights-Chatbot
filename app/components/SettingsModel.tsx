@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { FaEdit, FaSave, FaTimes } from 'react-icons/fa';
 
 export const SettingsModel = () => {
     const [assistant, setAssistant] = useState(null);
@@ -13,7 +14,6 @@ export const SettingsModel = () => {
                 const response = await fetch('/api/assistants');
                 const data = await response.json();
                 setAssistant(data);
-                // Set initial values for editable fields
                 setEditedName(data.name);
                 setEditedInstructions(data.instructions);
                 setEditedModel(data.model);
@@ -30,7 +30,6 @@ export const SettingsModel = () => {
     };
 
     const handleSave = () => {
-        // Here you would typically make an API call to save the changes
         console.log('Saving:', editedName, editedInstructions, editedModel);
         setAssistant({
             ...assistant,
@@ -42,80 +41,112 @@ export const SettingsModel = () => {
     };
 
     if (!assistant) {
-        return <div className="text-center text-white">Loading...</div>;
+        return (
+            <div className="flex justify-center items-center h-screen bg-gray-900">
+                <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-purple-500"></div>
+            </div>
+        );
     }
 
     return (
-        <div className="p-8 bg-gradient-to-r from-stone-900 to-gray-800  text-white min-h-screen">
-            <div className="max-w-4xl mx-auto bg-gradient-to-r from-stone-900 to-gray-800  text-white p-5 rounded-lg shadow">
-                {editMode ? (
-                    <>
-                        <div className="mb-4">
-                            <label className="block text-white text-sm font-bold mb-2" htmlFor="name">
-                                Name
-                            </label>
-                            <input
-                                type="text"
-                                id="name"
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-green-500 bg-black leading-tight focus:outline-none focus:shadow-outline"
-                                value={editedName}
-                                onChange={(e) => setEditedName(e.target.value)}
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <label className="block text-white text-sm font-bold mb-2" htmlFor="model">
-                                Model
-                            </label>
-                            <input
-                                type="text"
-                                id="model"
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-green-500 bg-black leading-tight focus:outline-none focus:shadow-outline"
-                                value={editedModel}
-                                onChange={(e) => setEditedModel(e.target.value)}
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <label className="block text-white text-sm font-bold mb-2" htmlFor="instructions">
-                                Instructions
-                            </label>
-                            <textarea
-                                id="instructions"
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-green-500 bg-black leading-tight focus:outline-none focus:shadow-outline "
-                                value={editedInstructions}
-                                onChange={(e) => setEditedInstructions(e.target.value)}
-                                rows="4"
-                            />
-                        </div>
-                        <button onClick={handleSave} className="bg-black hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                            Save
-                        </button>
-                    </>
-                ) : (
-                    <>
-                        <h1 className="text-xl text-wite font-semibold">{assistant.name}</h1>
-                        <p className="text-wite font-semibold"><strong>Model:</strong> {assistant.model}</p>
-                        <div>
-                            <h2 className="text-lg font-semibold mt-4 mb-2">Instructions:</h2>
-                            <div className="bg-black  text-green-500 p-3 rounded">
-                                {assistant.instructions ? <pre className="whitespace-pre-wrap">{assistant.instructions}</pre> : <p>No instructions provided.</p>}
+        <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black text-white p-8">
+            <div className="max-w-4xl mx-auto bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+                <div className="p-6 border-b border-gray-700">
+                    <h1 className="text-2xl font-bold text-purple-400">Assistant Settings</h1>
+                </div>
+                <div className="p-6">
+                    {editMode ? (
+                        <div className="space-y-6">
+                            <div>
+                                <label className="block text-sm font-medium text-gray-400 mb-2" htmlFor="name">
+                                    Name
+                                </label>
+                                <input
+                                    type="text"
+                                    id="name"
+                                    className="w-full bg-gray-700 border border-gray-600 rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                    value={editedName}
+                                    onChange={(e) => setEditedName(e.target.value)}
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-400 mb-2" htmlFor="model">
+                                    Model
+                                </label>
+                                <input
+                                    type="text"
+                                    id="model"
+                                    className="w-full bg-gray-700 border border-gray-600 rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                    value={editedModel}
+                                    onChange={(e) => setEditedModel(e.target.value)}
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-400 mb-2" htmlFor="instructions">
+                                    Instructions
+                                </label>
+                                <textarea
+                                    id="instructions"
+                                    className="w-full bg-gray-700 border border-gray-600 rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                    value={editedInstructions}
+                                    onChange={(e) => setEditedInstructions(e.target.value)}
+                                    rows="4"
+                                />
                             </div>
                         </div>
-                        <div>
-                            <h2 className="text-lg font-semibold mt-4">Tools:</h2>
-                            <ul className="list-disc pl-5">
-                                {assistant.tools.map((tool, index) => (
-                                    <li key={index} className="text-wite font-semibold">{tool.type}</li>
-                                ))}
-                            </ul>
+                    ) : (
+                        <div className="space-y-6">
+                            <div>
+                                <h2 className="text-lg font-semibold text-purple-400 mb-2">Name</h2>
+                                <p className="text-white">{assistant.name}</p>
+                            </div>
+                            <div>
+                                <h2 className="text-lg font-semibold text-purple-400 mb-2">Model</h2>
+                                <p className="text-white">{assistant.model}</p>
+                            </div>
+                            <div>
+                                <h2 className="text-lg font-semibold text-purple-400 mb-2">Instructions</h2>
+                                <div className="bg-gray-700 rounded-md p-3">
+                                    <pre className="whitespace-pre-wrap text-white">{assistant.instructions || 'No instructions provided.'}</pre>
+                                </div>
+                            </div>
+                            <div>
+                                <h2 className="text-lg font-semibold text-purple-400 mb-2">Tools</h2>
+                                <ul className="list-disc list-inside text-white">
+                                    {assistant.tools.map((tool, index) => (
+                                        <li key={index}>{tool.type}</li>
+                                    ))}
+                                </ul>
+                            </div>
                         </div>
-                        <button onClick={handleEditToggle} className="mt-4 bg-black w-60 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                            Edit
+                    )}
+                </div>
+                <div className="p-6 bg-gray-900 flex justify-end">
+                    {editMode ? (
+                        <>
+                            <button
+                                onClick={handleSave}
+                                className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-md mr-2 flex items-center transition duration-300"
+                            >
+                                <FaSave className="mr-2" /> Save
+                            </button>
+                            <button
+                                onClick={handleEditToggle}
+                                className="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-md flex items-center transition duration-300"
+                            >
+                                <FaTimes className="mr-2" /> Cancel
+                            </button>
+                        </>
+                    ) : (
+                        <button
+                            onClick={handleEditToggle}
+                            className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-md flex items-center transition duration-300"
+                        >
+                            <FaEdit className="mr-2" /> Edit
                         </button>
-                    </>
-                )}
+                    )}
+                </div>
             </div>
         </div>
     );
 }
-
-

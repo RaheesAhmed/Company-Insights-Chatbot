@@ -127,7 +127,10 @@ const Chat = ({ messages, setMessages }) => {
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
-
+  const handleCardClick = (cardTitle) => {
+    setUserInput(cardTitle);
+    setShowAssistantCards(false);
+  };
 
 
   return (
@@ -137,7 +140,7 @@ const Chat = ({ messages, setMessages }) => {
         {messages.map((msg, index) => <Message key={index} role={msg.role} text={msg.text} />)}
         <div ref={messagesEndRef} />
       </div>
-      {showAssistantCards && <AssistantFunctionsCard />}
+      {showAssistantCards && <AssistantFunctionsCard onCardClick={handleCardClick} />}
       <form onSubmit={handleSubmit} className={styles.inputForm}>
         <label htmlFor="file-upload" className={styles.uploadButton}>
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useTable } from 'react-table';
-import { TrashIcon } from '@heroicons/react/solid';
+import { FaTrash, FaSpinner } from 'react-icons/fa';
 
 const UserManagement = () => {
     const [users, setUsers] = useState([]);
@@ -13,7 +13,7 @@ const UserManagement = () => {
             if (!response.ok) {
                 throw new Error('Failed to fetch users');
             }
-            const { users: { data } } = await response.json(); // Adjusted to match the API structure
+            const { users: { data } } = await response.json();
             setUsers(data);
             setLoading(false);
         } catch (err) {
@@ -42,7 +42,7 @@ const UserManagement = () => {
                     throw new Error('Failed to delete user');
                 }
 
-                fetchUsers(); // Refresh the user list after successful deletion
+                fetchUsers();
             } catch (err) {
                 console.error('Error deleting user:', err);
                 setError(err.message);
@@ -65,9 +65,10 @@ const UserManagement = () => {
                 Cell: ({ row }) => (
                     <button
                         onClick={() => handleDelete(row.original.id)}
-                        className="text-red-600 hover:text-red-800"
+                        className="text-red-400 hover:text-red-600 transition-colors duration-200"
+                        aria-label="Delete user"
                     >
-                        <TrashIcon className="h-5 w-5" />
+                        <FaTrash className="h-5 w-5" />
                     </button>
                 ),
             },
@@ -77,11 +78,21 @@ const UserManagement = () => {
 
     const tableInstance = useTable({ columns, data: users });
 
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div className="text-red-600">Error: {error}</div>;
+    if (loading) return (
+        <div className="flex justify-center items-center h-64">
+            <FaSpinner className="animate-spin h-8 w-8 text-purple-500" />
+        </div>
+    );
+
+    if (error) return (
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+            <strong className="font-bold">Error:</strong>
+            <span className="block sm:inline"> {error}</span>
+        </div>
+    );
 
     if (!Array.isArray(users) || users.length === 0) {
-        return <div>No users found.</div>;
+        return <div className="text-center text-gray-500 mt-4">No users found.</div>;
     }
 
     const {
@@ -93,12 +104,12 @@ const UserManagement = () => {
     } = tableInstance;
 
     return (
-        <div className="container mx-auto p-6 sm:p-10">
+        <div className="container mx-auto p-6 bg-gray-900 rounded-lg shadow-xl">
 
-            <p className="mb-4 text-white">Total Users: {users.length}</p>
+            <p className="mb-4 text-gray-300">Total Users: {users.length}</p>
             <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
-                <table {...getTableProps()} className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                    <thead className="text-xs text-white uppercase bg-gray-800 dark:bg-gray-700">
+                <table {...getTableProps()} className="w-full text-sm text-left text-gray-300">
+                    <thead className="text-xs uppercase bg-gray-700 text-gray-300">
                         {headerGroups.map(headerGroup => (
                             <tr {...headerGroup.getHeaderGroupProps()}>
                                 {headerGroup.headers.map(column => (
@@ -112,11 +123,11 @@ const UserManagement = () => {
                             </tr>
                         ))}
                     </thead>
-                    <tbody {...getTableBodyProps()} className="bg-black  dark:bg-gray-800">
+                    <tbody {...getTableBodyProps()} className="bg-gray-800">
                         {rows.map(row => {
                             prepareRow(row);
                             return (
-                                <tr {...row.getRowProps()} className="border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                <tr {...row.getRowProps()} className="border-b border-gray-700 hover:bg-gray-600 transition-colors duration-200">
                                     {row.cells.map(cell => (
                                         <td
                                             {...cell.getCellProps()}
@@ -133,7 +144,6 @@ const UserManagement = () => {
             </div>
         </div>
     );
-
 };
 
 export default UserManagement;

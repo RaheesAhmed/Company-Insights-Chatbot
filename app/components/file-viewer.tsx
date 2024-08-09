@@ -1,22 +1,5 @@
 import React, { useState, useEffect } from "react";
-import styles from "./file-viewer.module.css";
-import { DocumentAddIcon } from '@heroicons/react/outline';
-const TrashIcon = () => (
-  <svg
-    className={styles.fileDeleteIcon}
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 12 12"
-    height="12"
-    width="12"
-    fill="#fff"
-  >
-    <path
-      fillRule="evenodd"
-      clipRule="evenodd"
-      d="M5.15736 1.33332C4.8911 1.33332 4.65864 1.51361 4.59238 1.77149L4.4214 2.43693H7.58373L7.41275 1.77149C7.34649 1.51361 7.11402 1.33332 6.84777 1.33332H5.15736ZM8.78829 2.43693L8.54271 1.48115C8.34393 0.707516 7.64653 0.166656 6.84777 0.166656H5.15736C4.35859 0.166656 3.6612 0.707515 3.46241 1.48115L3.21683 2.43693H1.33333C1.01117 2.43693 0.75 2.6981 0.75 3.02026C0.75 3.34243 1.01117 3.6036 1.33333 3.6036H1.39207L2.10068 10.2683C2.19529 11.1582 2.94599 11.8333 3.84087 11.8333H8.15913C9.05401 11.8333 9.80471 11.1582 9.89932 10.2683L10.6079 3.6036H10.6667C10.9888 3.6036 11.25 3.34243 11.25 3.02026C11.25 2.6981 10.9888 2.43693 10.6667 2.43693H8.78829ZM9.43469 3.6036H2.56531L3.2608 10.145C3.29234 10.4416 3.54257 10.6667 3.84087 10.6667H8.15913C8.45743 10.6667 8.70766 10.4416 8.7392 10.145L9.43469 3.6036ZM4.83333 4.83332C5.1555 4.83332 5.41667 5.09449 5.41667 5.41666V8.33332C5.41667 8.65549 5.1555 8.91666 4.83333 8.91666C4.51117 8.91666 4.25 8.65549 4.25 8.33332V5.41666C4.25 5.09449 4.51117 4.83332 4.83333 4.83332ZM7.16667 4.83332C7.48883 4.83332 7.75 5.09449 7.75 5.41666V8.33332C7.75 8.65549 7.48883 8.91666 7.16667 8.91666C6.8445 8.91666 6.58333 8.65549 6.58333 8.33332V5.41666C6.58333 5.09449 6.8445 4.83332 7.16667 4.83332Z"
-    />
-  </svg>
-);
+import { FaUpload, FaTrash } from 'react-icons/fa';
 
 const FileViewer = () => {
   const [files, setFiles] = useState([]);
@@ -37,51 +20,55 @@ const FileViewer = () => {
     setFiles(data);
   };
 
-  const handleFileDelete = async (fileId: any) => {
+  const handleFileDelete = async (fileId) => {
     await fetch("/api/assistants/files", {
       method: "DELETE",
       body: JSON.stringify({ fileId }),
     });
   };
 
-  const handleFileUpload = async (event: any) => {
+  const handleFileUpload = async (event) => {
     const data = new FormData();
-    if (event.target.files.length < 0) return;
-    data.append("file", event.target.files[0]);
-    await fetch("/api/assistants/files", {
-      method: "POST",
-      body: data,
-    });
+    if (event.target.files.length > 0) {
+      data.append("file", event.target.files[0]);
+      await fetch("/api/assistants/files", {
+        method: "POST",
+        body: data,
+      });
+    }
   };
 
   return (
-    <>
-      <h4 className="text-bold text-white mt-5 font-semibold">
-        Upload Your Files for Assistant
-      </h4>
-      <p className="text-sm text-white mb-5">
-        These files will be used for Assistant. It will be used for Assistant Knowledgebase.
+    <div className="bg-gray-900 text-white p-6 rounded-lg shadow-xl">
+      <h4 className="text-2xl font-bold mb-2">Upload Files for Assistant</h4>
+      <p className="text-sm text-gray-400 mb-6">
+        These files will be used for the Assistant's knowledgebase.
       </p>
-      <hr />
-      <div className='bg-black text-white  text-start p-4 rounded-lg shadow-lg'>
-
-        <div className={`${files.length !== 0 ? 'grow' : ''} overflow-auto`}>
+      <div className="border-t border-gray-700 pt-6">
+        <div className={`${files.length !== 0 ? 'mb-6' : ''} max-h-60 overflow-auto`}>
           {files.length === 0 ? (
-            <div className="text-sm text-gray-400  font-semibold text-left"></div>
+            <div className="text-sm text-gray-400 font-semibold">No files uploaded yet.</div>
           ) : (
             files.map((file) => (
-              <div key={file.file_id} className="flex justify-between items-center p-2 hover:bg-gray-700 rounded-md">
+              <div key={file.file_id} className="flex justify-between items-center p-3 hover:bg-gray-800 rounded-md transition duration-150 ease-in-out">
                 <span className="text-white truncate">{file.filename}</span>
-                <button onClick={() => handleFileDelete(file.file_id)} className="text-red-500 hover:text-red-700">
-                  <TrashIcon className="h-5 w-5" />
+                <button
+                  onClick={() => handleFileDelete(file.file_id)}
+                  className="text-red-400 hover:text-red-600 transition duration-150 ease-in-out"
+                  aria-label="Delete file"
+                >
+                  <FaTrash className="h-5 w-5" />
                 </button>
               </div>
             ))
           )}
         </div>
-        <div className='mt-4 flex justify-center items-center p-4 rounded-lg shadow-lg hover:bg-gray-700 transition duration-150 ease-in-out cursor-pointer'>
-          <label htmlFor="file-upload" className="flex items-center border-2 p-4 justify-center space-x-2 cursor-pointer">
-            <DocumentAddIcon className="h-6 w-6 text-white " />
+        <div className='mt-4'>
+          <label
+            htmlFor="file-upload"
+            className="flex items-center justify-center p-4 border-2 border-dashed border-gray-600 rounded-lg cursor-pointer hover:bg-gray-800 transition duration-150 ease-in-out"
+          >
+            <FaUpload className="h-6 w-6 text-purple-500 mr-2" />
             <span className="text-white">Upload files</span>
           </label>
           <input
@@ -89,12 +76,11 @@ const FileViewer = () => {
             id="file-upload"
             name="file-upload"
             className="hidden"
-            multiple
             onChange={handleFileUpload}
           />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -6,6 +6,7 @@ import EditCard from "../../components/EditCard";
 import FileViewer from "../../components/file-viewer";
 import DashboardOverview from '@/app/components/DashboardOverview';
 import UserManagement from '@/app/components/UserManagement';
+import { FiHome, FiDatabase, FiUsers, FiSettings } from 'react-icons/fi';
 
 const Admin = () => {
     const { user } = useUser();
@@ -15,10 +16,10 @@ const Admin = () => {
     const toggleSettings = () => setShowSettings(!showSettings);
 
     const sidebarItems = [
-        'Dashboard Overview',
-        'Data Management',
-        'User Management',
-        'Settings'
+        { name: 'Dashboard Overview', icon: FiHome },
+        { name: 'Data Management', icon: FiDatabase },
+        { name: 'User Management', icon: FiUsers },
+        { name: 'Settings', icon: FiSettings }
     ];
 
     const renderContent = () => {
@@ -37,18 +38,22 @@ const Admin = () => {
     };
 
     return (
-        <div className="flex min-h-screen bg-brand-dark-light">
+        <div className="flex min-h-screen bg-gradient-to-br from-brand-dark-light to-brand-black">
             {/* Sidebar */}
-            <div className="w-64 bg-brand-black text-white">
-
+            <div className="w-64 bg-brand-black text-white shadow-lg">
+                <div className="p-6 mb-8">
+                    <h1 className="text-2xl font-bold text-purple-500">Admin Panel</h1>
+                </div>
                 <nav>
                     {sidebarItems.map((item) => (
                         <button
-                            key={item}
-                            className={`w-full text-left p-4 ${activeTab === item ? 'bg-gray-700' : ''} hover:bg-gray-700`}
-                            onClick={() => setActiveTab(item)}
+                            key={item.name}
+                            className={`w-full text-left p-4 flex items-center space-x-3 ${activeTab === item.name ? 'bg-purple-900 text-purple-300' : ''
+                                } hover:bg-purple-800 transition-all duration-200`}
+                            onClick={() => setActiveTab(item.name)}
                         >
-                            {item}
+                            <item.icon className="w-5 h-5" />
+                            <span>{item.name}</span>
                         </button>
                     ))}
                 </nav>
@@ -57,16 +62,16 @@ const Admin = () => {
             {/* Main content */}
             <div className="flex-1 p-10">
                 <div className="flex justify-between items-center mb-8">
-                    <h2 className="text-2xl font-semibold text-white">{activeTab}</h2>
+                    <h2 className="text-3xl font-bold text-white">{activeTab}</h2>
 
                 </div>
-                {renderContent()}
+                <div className="bg-brand-black bg-opacity-50 rounded-lg shadow-xl p-6">
+                    {renderContent()}
+                </div>
             </div>
         </div>
     );
 };
-
-
 
 const DataManagement = () => {
     const [file, setFile] = useState(null);
@@ -77,16 +82,14 @@ const DataManagement = () => {
 
     const handleUpload = async () => {
         if (!file) return;
-        // Implement your file upload logic here
         console.log('Uploading file:', file.name);
-        // After successful upload, you might want to refresh the FileViewer
     };
 
     return (
         <div className="space-y-6">
 
-            <div className="bg-brand-black p-6 rounded-lg">
-                <h3 className="text-lg font-semibold mb-4 text-white">File Viewer</h3>
+            <div className="bg-brand-black p-6 rounded-lg shadow-inner">
+                <h3 className="text-xl font-semibold mb-4 text-purple-400">File Viewer</h3>
                 <FileViewer />
             </div>
         </div>
